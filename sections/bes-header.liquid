@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="{{ 'bes-header.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<style></style>
+
+<header>
+  <div>
+    {% comment %} Getting Navigation from Shopify Object {% endcomment %}
+    {% assign main_menu = linklists['main-menu'] %}
+    {% if main_menu %}
+      <nav class="lagoon-nav">
+        <ul>
+          {% for link in main_menu.links %}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+  <div>
+    {% comment %} Logo {% endcomment %}
+  </div>
+  <div>
+    {% comment %} Cart icon, Account, Search, About {% endcomment %}
+  </div>
+</header>
+
+{% javascript %}
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Header - BeS",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "t:sections.header.settings.menu.label"
+    }
+  ]
+}
+{% endschema %}
