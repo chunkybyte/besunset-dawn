@@ -337,11 +337,11 @@
         {% case block.type %}
           {% when 'heading' %}
             <{{ block.settings.heading_size }} class="lagoon-hero-banner__heading">
-              {{ block.settings.heading | richtext }}
+              {{ block.settings.heading }}
             </{{ block.settings.heading_size }}>
           {% when 'text' %}
             <p class="lagoon-hero-banner__text {{ block.settings.text_style }}">
-              {{ block.settings.text | richtext }}
+              {{ block.settings.text }}
             </p>
           {% when 'buttons' %}
             <div class="lagoon-hero-banner__buttons">
