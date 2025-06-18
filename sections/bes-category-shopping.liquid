@@ -1,0 +1,206 @@
+<style>
+  .bes-category-shopping-section {
+    max-width: 2000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .bes-category-shopping-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+  }
+  .bes-category-shopping-item {
+    flex: 1;
+    max-width: 40%;
+    height: 700px;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+  }
+  .bes-category-shopping-item-link {
+    text-decoration: none;
+  }
+  .bes-category-shopping-img-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bes-category-shopping-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    display: block;
+  }
+  .bes-category-shopping-item:hover .bes-category-shopping-img {
+    transform: scale(1.12);
+  }
+  .bes-category-shopping-item:hover .bes-category-shopping-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+  }
+  .bes-category-shopping-item-content {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    z-index: 1;
+    position: relative;
+  }
+  .bes-category-shopping-item-content h3 {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: 2px;
+    color: #fff;
+    margin: 0;
+    font-family: 'Aboreto', system-ui;
+    margin-bottom: 32px;
+  }
+  .bes-category-shopping-item-content p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.25;
+    font-family: 'Quicksand', system-ui;
+    color: #fff;
+    margin: 0 0 24px 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .bes-category-shopping-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    pointer-events: none;
+    transition: background-color 0.3s ease;
+  }
+  .lagoon-button {
+    margin: 0;
+    padding: 12px 32px;
+  }
+  @media (max-width: 768px) {
+    .bes-category-shopping-item-content {
+      width: 100%;
+    }
+    .bes-category-shopping-container {
+      flex-direction: column;
+    }
+    .bes-category-shopping-item {
+      max-width: 100%;
+      width: 100%;
+      height: 500px;
+      min-height: calc((100vh / 3) - 32px);
+    }
+    .bes-category-shopping-item-content p {
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .bes-category-shopping-item-content h3 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+    .lagoon-button {
+      padding: 8px 32px;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+  }
+</style>
+
+<section class="bes-category-shopping-section">
+  <div class="bes-category-shopping-container">
+    {% for block in section.blocks %}
+      <a href="{{ block.settings.link_url }}" class="bes-category-shopping-item-link">
+        <div class="bes-category-shopping-item">
+          <div class="bes-category-shopping-img-wrapper">
+            <img
+              src="{{ block.settings.image | image_url: width: 1000 }}"
+              alt="{{ block.settings.title }}"
+              class="bes-category-shopping-img"
+              loading="lazy"
+              width="1000"
+              height="700"
+            >
+          </div>
+          <div class="bes-category-shopping-overlay">
+            {% comment %} Not Empty {% endcomment %}
+          </div>
+          <div class="bes-category-shopping-item-content">
+            <p>{{ block.settings.subtitle }}</p>
+            <h3>{{ block.settings.title }}</h3>
+            <a href="{{ block.settings.link_url }}" class="lagoon-button lagoon-button--secondary">
+              {{- block.settings.link_text -}}
+            </a>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shopping Categories - BeS",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link Text"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shopping Categories - BeS"
+    }
+  ]
+}
+{% endschema %}

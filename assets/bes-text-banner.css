@@ -1,0 +1,87 @@
+.lagoon-text-banner__subtitle {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.lagoon-text-banner__heading2 {
+  font-family: 'Aboreto', system-ui;
+  font-size: 2.4rem;
+  color: #000;
+  margin: 0;
+  margin-bottom: 16px;
+}
+.lagoon-text-banner__body {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.6rem;
+  color: #666;
+  margin: 0;
+  margin-bottom: 16px;
+}
+.lagoon-text-banner__ctas {
+  margin-top: 0;
+}
+.lagoon-text-banner__ctas .lagoon-text-banner__button {
+  margin: 8px 16px;
+}
+@media (min-width: 768px) {
+  .lagoon-text-banner__ctas {
+    margin-top: 32px;
+  }
+}
+/* Animated Button Styles */
+.lagoon-text-banner__button {
+  display: inline-block;
+  position: relative;
+  padding: 12px 24px;
+  margin: 0 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: transparent;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.6rem;
+
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+.lagoon-text-banner__button::before {
+  display: none;
+}
+.lagoon-text-banner__button::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #3e2f2a;
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+.lagoon-text-banner__button:hover::after {
+  width: 100%;
+}
+
+.lagoon-text-banner__button--primary {
+  color: #fff;
+  background-color: #3e2f2a;
+  border: 2px solid #3e2f2a;
+}
+.lagoon-text-banner__button--primary::after {
+  background-color: #fff;
+}
+.lagoon-text-banner__button--primary:hover {
+  color: #3e2f2a;
+}
+
+.lagoon-text-banner__button--secondary {
+  color: #3e2f2a;
+  background-color: #f0f0f0;
+  border: 2px solid #3e2f2a;
+}
+.lagoon-text-banner__button--secondary:hover {
+  color: white;
+}

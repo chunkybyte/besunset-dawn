@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="{{ 'bes-text-banner.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<style>
+  .lagoon-text-banner {
+    margin: 0 auto;
+    padding: 64px 32px;
+    background-color: #fff;
+
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+</style>
+
+<div>
+  <p class="lagoon-text-banner__subtitle">Welcome To</p>
+  <h2 class="lagoon-text-banner__heading2">The BeSunset Brand</h2>
+  <p class="lagoon-text-banner__body">
+    We started BeSunset with a clear vision to transcend trends, and instead design future vintage pieces that would be
+    loved for seasons to come.
+  </p>
+  <div class="lagoon-text-banner__ctas">
+    <a href="/" class="lagoon-text-banner__button lagoon-text-banner__button--primary">Learn More</a>
+    <a href="/" class="lagoon-text-banner__button lagoon-text-banner__button--secondary">All Collections</a>
+  </div>
+</div>
+
+{% javascript %}
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Text Banner - BeS",
+  "class": "lagoon-text-banner",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Text Banner - BeS"
+    }
+  ]
+}
+{% endschema %}

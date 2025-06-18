@@ -1,0 +1,346 @@
+{% comment %}
+  Testimonials Component
+  This is a testimonial component that is filled through the customizer.
+  Name: Testimonials - BeS
+  Variables fetched from the user through customizer:
+  1. Title of the Testimonials Section
+  2. Subtitle of the Testimonials Section
+  3. Block (maximum of 8 blocks):
+      a. Testimonials - Person Name
+      b. Testimonials - Quote
+      c. Testimonials - Image
+      d. Testimonials - Product
+  4. Background Color of the Testimonials Section
+{% endcomment %}
+
+<section class="bes-testimonials-section" style="background: {{ section.settings.bg_color }};">
+  {% comment %}
+    <div class="bes-testimonials-nav">
+      <button class="bes-testimonials-arrow bes-testimonials-arrow--left" aria-label="Previous testimonials" disabled>
+        &#8592;
+      </button>
+      <button class="bes-testimonials-arrow bes-testimonials-arrow--right" aria-label="Next testimonials">&#8594;</button>
+    </div>
+  {% endcomment %}
+  <div class="bes-testimonial-header-mobile">
+    <h2>{{ section.settings.title }}</h2>
+    <p>{{ section.settings.subtitle }}</p>
+  </div>
+  <div class="bes-testimonials-list-wrapper">
+    <div class="bes-testimonials-list-item bes-testimonials-header">
+      <div>
+        <h2>{{ section.settings.title }}</h2>
+        <p>{{ section.settings.subtitle }}</p>
+      </div>
+      <div class="bes-testimonials-nav">
+        <button class="bes-testimonials-arrow bes-testimonials-arrow--left" aria-label="Previous testimonials" disabled>
+          &#8592;
+        </button>
+        <button class="bes-testimonials-arrow bes-testimonials-arrow--right" aria-label="Next testimonials">
+          &#8594;
+        </button>
+      </div>
+    </div>
+    <div class="bes-testimonials-list">
+      {% for block in section.blocks %}
+        <div class="bes-testimonial">
+          <div class="bes-testimonial-content">
+            <div class="bes-testimonial-quote">“{{ block.settings.quote }}”</div>
+            <div class="bes-testimonial-person">
+              <div class="bes-testimonial-name">{{ block.settings.name }}</div>
+            </div>
+            {% if block.settings.product != blank %}
+              {% assign product = block.settings.product %}
+              <a href="{{ product.url }}" class="bes-testimonial-product">Check it out now</a>
+            {% endif %}
+          </div>
+          {% if block.settings.image != blank %}
+            <img
+              src="{{ block.settings.image | image_url: width: 600 }}"
+              alt="{{ block.settings.name }}"
+              class="bes-testimonial-image"
+              width="500"
+              height="500"
+            >
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .bes-testimonials-section {
+    padding: 32px;
+    position: relative;
+  }
+  .bes-testimonials-header {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0 32px 0 0;
+    min-width: 300px;
+  }
+  .bes-testimonials-header h2 {
+    margin-top: 0;
+    font-family: 'Aboreto', system-ui;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    color: #000;
+    margin-bottom: 16px;
+  }
+  .bes-testimonials-header p {
+    margin-top: 0;
+  }
+  .bes-testimonials-nav {
+    display: flex;
+    gap: 0.5rem;
+    /* position: absolute;
+    bottom: 0px;
+    right: 40px;
+    z-index: 100; */
+  }
+  .bes-testimonial-header-mobile {
+    display: none;
+  }
+  .bes-testimonials-arrow {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .bes-testimonials-arrow:hover {
+    background: #eee;
+  }
+  .bes-testimonials-list-wrapper {
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    position: relative;
+  }
+  .bes-testimonials-list {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .bes-testimonials-list::-webkit-scrollbar {
+    display: none;
+  }
+  .bes-testimonial {
+    min-width: 25%;
+    max-width: 25%;
+    margin-right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    box-sizing: border-box;
+    padding: 0 16px;
+  }
+  .bes-testimonial:nth-child(even) {
+    flex-direction: column-reverse;
+  }
+  .bes-testimonial-content {
+    border-left: 1px solid #ccc;
+    padding: 0 0 16px 0;
+  }
+  .bes-testimonial:nth-child(even) .bes-testimonial-content {
+    padding: 16px 0 0 0;
+  }
+  .bes-testimonial-quote {
+    font-family: 'Quicksand', system-ui;
+    text-align: left;
+    letter-spacing: -0.5px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: #3e2f2a;
+    margin-bottom: 1rem;
+    padding: 0 32px;
+  }
+  .bes-testimonial-person {
+    padding: 0 32px;
+    font-family: 'Quicksand', system-ui;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: 1.5px;
+    color: #3e2f2a;
+    margin: 16px 0;
+  }
+  .bes-testimonial-product {
+    font-family: 'Quicksand', system-ui;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #3e2f2a;
+    letter-spacing: -0.5px;
+    text-decoration: underline;
+    text-transform: uppercase;
+    padding: 0 32px;
+    margin: 16px 0;
+  }
+  .bes-testimonial-link {
+    margin-top: 1rem;
+    color: #222;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  .bes-testimonial-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  @media (max-width: 768px) {
+    .bes-testimonial-header-mobile {
+      display: block;
+    }
+    .bes-testimonials-section {
+      padding: 32px 16px;
+    }
+    .bes-testimonial-header-mobile {
+      font-family: 'Aboreto', system-ui;
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.05em;
+      color: #000;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .bes-testimonial-quote {
+      font-size: 18px;
+      padding: 0 16px;
+    }
+    .bes-testimonial-person {
+      padding: 0 16px;
+    }
+    .bes-testimonial-product {
+      padding: 0 16px;
+    }
+    .bes-testimonials-list {
+      margin: 16px -16px 0 -16px;
+    }
+    .bes-testimonial {
+      min-width: 70%;
+      max-width: 70%;
+      margin-right: 0;
+    }
+    .bes-testimonials-header {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const section = document.querySelector('.bes-testimonials-section');
+    const listWrapper = section.querySelector('.bes-testimonials-list-wrapper');
+    const list = section.querySelector('.bes-testimonials-list');
+    const leftArrow = section.querySelector('.bes-testimonials-arrow--left');
+    const rightArrow = section.querySelector('.bes-testimonials-arrow--right');
+    const testimonials = Array.from(list.children);
+    let currentIndex = 0;
+
+    function getCardWidth() {
+      return testimonials[0] ? testimonials[0].offsetWidth : 0;
+    }
+
+    function updateArrows() {
+      leftArrow.disabled = list.scrollLeft <= 0;
+      rightArrow.disabled = list.scrollLeft + list.offsetWidth >= list.scrollWidth - 1;
+    }
+
+    leftArrow.addEventListener('click', function () {
+      const cardWidth = getCardWidth();
+      list.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    });
+    rightArrow.addEventListener('click', function () {
+      const cardWidth = getCardWidth();
+      list.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    });
+
+    // Update currentIndex and arrows on scroll
+    list.addEventListener('scroll', function () {
+      const cardWidth = getCardWidth();
+      currentIndex = Math.round(list.scrollLeft / cardWidth);
+      updateArrows();
+    });
+
+    // Initial state
+    updateArrows();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Testimonials - BeS",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Honest Reviews"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "What our customers are saying"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fafafa"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Person Name"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Testimonials - BeS",
+      "category": "Testimonials"
+    }
+  ]
+}
+{% endschema %}

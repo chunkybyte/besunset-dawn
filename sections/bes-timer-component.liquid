@@ -1,0 +1,258 @@
+{% comment %}
+  Timer Component
+     This is a working timer component that will be used to display the time remaining until a certain event.
+     Name: BeS - Simple Timer
+     Variables fetched from the user through customizer:
+     1. Title of the Timer Event
+     2. Subtitle of the Timer Event
+     3. Date of the Timer Event
+     4. Time of the Timer Event
+     5. Timezone of the Timer Event
+     6. Background Color of the Timer
+     7. CTA for the Timer Component - Copy
+     8. CTA for the Timer Component - Link
+{% endcomment %}
+
+<style>
+  .bes-timer-component {
+    padding: 48px 32px;
+    background: #fff;
+    font-family: 'Aboreto', system-ui;
+  }
+  .bes-timer-content {
+    margin: 0 auto;
+    text-align: center;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 32px;
+  }
+  .bes-timer-header {
+    text-align: left;
+  }
+  .bes-timer-title {
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+    margin-top: 0;
+    color: #3e2f2a;
+  }
+  .bes-timer-subtitle {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+    letter-spacing: 0.02em;
+  }
+  .bes-timer-countdown {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    gap: 32px;
+  }
+  .bes-timer-segment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+  }
+  .bes-timer-number {
+    font-size: 48px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: #3e2f2a;
+    transition: color 0.2s;
+    font-family: 'Quicksand', system-ui;
+    line-height: 0.8;
+  }
+  .bes-timer-label {
+    font-size: 14px;
+    color: #888;
+    letter-spacing: 0.12em;
+    margin-top: 6px;
+  }
+  .bes-timer-cta {
+    padding: 16px 64px;
+  }
+  @media (max-width: 1024px) {
+    .bes-timer-component {
+      padding: 32px 16px;
+    }
+    .bes-timer-content {
+      flex-direction: column;
+      padding: 16px 16px;
+    }
+    .bes-timer-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .bes-timer-countdown {
+      gap: 12px;
+      padding: 16px 0;
+      margin-bottom: 16px;
+    }
+    .bes-timer-title {
+      font-size: 32px;
+    }
+    .bes-timer-number {
+      font-size: 32px;
+    }
+    .bes-timer-subtitle {
+      font-size: 14px;
+    }
+    .bes-timer-label {
+      font-size: 12px;
+    }
+  }
+</style>
+
+<section class="bes-timer-component" style="background: {{ section.settings.bg_color | default: '#fff' }};">
+  <div class="bes-timer-content">
+    <div class="bes-timer-header">
+      {% if section.settings.title != blank %}
+        <h2 class="bes-timer-title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <p class="bes-timer-subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+    <div
+      class="bes-timer-countdown"
+      data-end-date="{{ section.settings.end_date | default: '2025-08-01' }}"
+      data-end-time="{{ section.settings.end_time | default: '00:00:00' }}"
+      data-timezone="{{ section.settings.timezone | default: 'UTC' }}"
+    >
+      <div class="bes-timer-segment">
+        <span class="bes-timer-number" id="bes-days">00</span><span class="bes-timer-label">DAYS</span>
+      </div>
+      <div class="bes-timer-segment">
+        <span class="bes-timer-number" id="bes-hours">00</span><span class="bes-timer-label">HOURS</span>
+      </div>
+      <div class="bes-timer-segment">
+        <span class="bes-timer-number" id="bes-minutes">00</span><span class="bes-timer-label">MINUTES</span>
+      </div>
+      <div class="bes-timer-segment">
+        <span class="bes-timer-number" id="bes-seconds">00</span><span class="bes-timer-label">SECONDS</span>
+      </div>
+    </div>
+    {% if section.settings.cta_text != blank %}
+      <a
+        href="{{ section.settings.cta_link | default: '#' }}"
+        class="bes-timer-cta lagoon-button lagoon-button--primary"
+      >
+        {{ section.settings.cta_text }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const timer = document.querySelector('.bes-timer-countdown');
+    if (!timer) return;
+
+    const endDate = timer.getAttribute('data-end-date');
+    const endTime = timer.getAttribute('data-end-time');
+    const timezone = timer.getAttribute('data-timezone') || 'UTC';
+
+    function getEndDate() {
+      // Combine date and time, and parse as UTC
+      return new Date(`${endDate}T${endTime}Z`);
+    }
+
+    function updateTimer() {
+      const now = new Date();
+      const end = getEndDate();
+      let diff = Math.max(0, end - now);
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff -= days * (1000 * 60 * 60 * 24);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      diff -= hours * (1000 * 60 * 60);
+      const minutes = Math.floor(diff / (1000 * 60));
+      diff -= minutes * (1000 * 60);
+      const seconds = Math.floor(diff / 1000);
+
+      document.getElementById('bes-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('bes-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('bes-minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('bes-seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Simple Timer - BeS",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "SUMMER SALE"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "50% Off Everything. Limited time only"
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End Date",
+      "default": "2025-08-01"
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "End Time (24h format, e.g. 23:59:59)",
+      "default": "00:00:00"
+    },
+    {
+      "type": "select",
+      "id": "timezone",
+      "label": "Timezone",
+      "default": "UTC",
+      "options": [
+        { "value": "UTC", "label": "UTC" },
+        { "value": "America/New_York", "label": "America/New_York" },
+        { "value": "America/Los_Angeles", "label": "America/Los_Angeles" },
+        { "value": "Europe/London", "label": "Europe/London" },
+        { "value": "Europe/Paris", "label": "Europe/Paris" },
+        { "value": "Asia/Kolkata", "label": "Asia/Kolkata" },
+        { "value": "Asia/Tokyo", "label": "Asia/Tokyo" },
+        { "value": "Australia/Sydney", "label": "Australia/Sydney" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fff"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "SHOP SALE"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Simple Timer - BeS",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}

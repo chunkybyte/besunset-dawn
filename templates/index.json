@@ -1,27 +1,354 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "bes_hero_banner_kNKebk": {
+      "type": "bes-hero-banner",
       "blocks": {
-        "heading": {
+        "text_Wj7nyc": {
+          "type": "text",
+          "settings": {
+            "text": "Be You. A 100% You.",
+            "text_style": "subtitle"
+          }
+        },
+        "heading_L6dTNt": {
           "type": "heading",
           "settings": {
-            "heading": "Image banner",
+            "heading": "Timeless Beauty, Elegance",
+            "heading_size": "h1"
+          }
+        },
+        "text_WCeKVV": {
+          "type": "text",
+          "settings": {
+            "text": "Luxury meets Style. Be Sunset. Be You.",
+            "text_style": "body"
+          }
+        },
+        "buttons_CEqGwn": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "SHOP NOW",
+            "button_link_1": "/",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": ["text_Wj7nyc", "heading_L6dTNt", "text_WCeKVV", "buttons_CEqGwn"],
+      "settings": {
+        "image": "shopify://shop_images/gus-tu-njana-QrZDl7IqAKc-unsplash.jpg",
+        "desktop_image_position": "center",
+        "hero_banner_height": "full-height",
+        "hero_banner_content_width": 100,
+        "hero_banner_content_alignment": "center",
+        "image_overlay_opacity": 20,
+        "content_width": 30,
+        "desktop_content_position": "lc--verti-middle lc--hori-center",
+        "bg_color": "#f2efe3"
+      }
+    },
+    "bes_hero_banner_xV7nnH": {
+      "type": "bes-hero-banner",
+      "blocks": {
+        "heading_xWb7Ld": {
+          "type": "heading",
+          "settings": {
+            "heading": "We are a <em>Brazilian</em> lifestyle brand with roots in Goa",
+            "heading_size": "h1"
+          }
+        },
+        "text_nrgJge": {
+          "type": "text",
+          "settings": {
+            "text": "We started The BeSunset Brand with a clear vision - to transcend trends, and instead design future vintage pieces that would be loved for seasons to come.",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": ["heading_xWb7Ld", "text_nrgJge"],
+      "name": "Hero Banner - BeS",
+      "settings": {
+        "desktop_image_position": "center",
+        "hero_banner_height": "auto-height",
+        "hero_banner_content_width": 60,
+        "hero_banner_content_alignment": "center",
+        "image_overlay_opacity": 0,
+        "content_width": 100,
+        "desktop_content_position": "lc--verti-middle lc--hori-center",
+        "bg_color": "#ffffff"
+      }
+    },
+    "bes_text_banner_LVeHdn": {
+      "type": "bes-text-banner",
+      "name": "Text Banner - BeS",
+      "settings": {}
+    },
+    "bes_exclusive_selection_T9Hg3p": {
+      "type": "bes-exclusive-selection",
+      "blocks": {
+        "tab_EnHyUn": {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Dresses",
+            "products": ["sunset-dress-test-product", "breeze-mango-dress", "covin-white-long-dress"]
+          }
+        },
+        "tab_6Eh7pk": {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Tops",
+            "products": [
+              "benitta-white-earrings",
+              "carlo-rucci-white-earrings",
+              "chain-hoop-link-earrings",
+              "sunset-shade-earrings-test-product"
+            ]
+          }
+        }
+      },
+      "block_order": ["tab_EnHyUn", "tab_6Eh7pk"],
+      "name": "Exclusive Products - BeS",
+      "settings": {
+        "title": "Weekly Selection"
+      }
+    },
+    "bes_ticker_9efVyq": {
+      "type": "bes-ticker",
+      "blocks": {
+        "ticker_text_FHTGjy": {
+          "type": "ticker_text",
+          "settings": {
+            "text": "Timeless ✦ Beauty ✦ Elegance ✦ Timeless ✦ Beauty ✦ Elegance ✦ Timeless ✦ Beauty ✦ Elegance ✦ Timeless ✦ Beauty ✦ Elegance",
+            "text_color": "#c7876b",
+            "ticker_font_size": 28,
+            "ticker_font_size_mobile": 16,
+            "speed": 12
+          }
+        },
+        "ticker_text_8hhfU4": {
+          "type": "ticker_text",
+          "settings": {
+            "text": "TOGETHER, WE CAN CREATE A REVOLUTION ✦",
+            "text_color": "#c7876b",
+            "ticker_font_size": 120,
+            "ticker_font_size_mobile": 40,
+            "speed": 20
+          }
+        }
+      },
+      "block_order": ["ticker_text_FHTGjy", "ticker_text_8hhfU4"],
+      "name": "Ticker - BeS",
+      "settings": {
+        "background_color": "#f5f0e8"
+      }
+    },
+    "bes_category_shopping_mVfF9A": {
+      "type": "bes-category-shopping",
+      "blocks": {
+        "category_6WQhYF": {
+          "type": "category",
+          "settings": {
+            "subtitle": "Be-Saavy",
+            "title": "NEW Arrivals",
+            "image": "shopify://shop_images/coco-Hve_ecNbOm4-unsplash.jpg",
+            "link_text": "GRAB NOW",
+            "link_url": "shopify://collections/apparels"
+          }
+        },
+        "category_na9pCH": {
+          "type": "category",
+          "settings": {
+            "subtitle": "Be-Airy",
+            "title": "DRESSES",
+            "image": "shopify://shop_images/benjamin-wedemeyer-p3NHhNs0ye4-unsplash.jpg",
+            "link_text": "SHOP NOW",
+            "link_url": "shopify://collections/apparels"
+          }
+        },
+        "category_DfzBkJ": {
+          "type": "category",
+          "settings": {
+            "subtitle": "Be-Stylish",
+            "title": "EARRINGs",
+            "image": "shopify://shop_images/nataliya-melnychuk-rmHpDod89Ds-unsplash.jpg",
+            "link_text": "VIEW NOW",
+            "link_url": "shopify://collections/jewellery"
+          }
+        }
+      },
+      "block_order": ["category_6WQhYF", "category_na9pCH", "category_DfzBkJ"],
+      "name": "Shopping Categories - BeS",
+      "settings": {}
+    },
+    "bes_story_banner_HHaC9V": {
+      "type": "bes-story-banner",
+      "blocks": {
+        "heading_PCJCH8": {
+          "type": "heading",
+          "settings": {
+            "heading": "We are a goan-based brazilian lifestyle brand",
+            "heading_size": "h1"
+          }
+        },
+        "text_4Mwyc3": {
+          "type": "text",
+          "settings": {
+            "text": "BeSunset started with a clear vision; to transcend trends and instead design future vintage pieces that would be loved for seasons to come.",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": ["heading_PCJCH8", "text_4Mwyc3"],
+      "name": "Story Banner - BeS",
+      "settings": {
+        "image": "shopify://shop_images/Screenshot_2025-06-12_at_4.51.52_PM.png",
+        "desktop_image_positioning": "row",
+        "desktop_image_position": "center",
+        "image_overlay_opacity": 0,
+        "content_width": 50,
+        "desktop_content_position": "lc--verti-middle lc--hori-left",
+        "bg_color": "#f2efe3"
+      }
+    },
+    "bes_story_banner_KMteVk": {
+      "type": "bes-story-banner",
+      "blocks": {
+        "heading_MU7jEe": {
+          "type": "heading",
+          "settings": {
+            "heading": "Nostalgia and love for retro",
             "heading_size": "h0"
           }
         },
-        "text": {
+        "text_krgq8k": {
           "type": "text",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text": "Dreamt of making a sustainable brand; in all the noise of everything that is looking a copy of a copy of a copy - BeSunset tries something bold. Bring out a unique you.",
             "text_style": "body"
+          }
+        }
+      },
+      "block_order": ["heading_MU7jEe", "text_krgq8k"],
+      "name": "Story Banner - BeS",
+      "settings": {
+        "image": "shopify://shop_images/Screenshot_2025-06-12_at_4.55.21_PM.png",
+        "desktop_image_positioning": "row-reverse",
+        "desktop_image_position": "center",
+        "image_overlay_opacity": 0,
+        "content_width": 40,
+        "desktop_content_position": "lc--verti-middle lc--hori-left",
+        "bg_color": "#ffffff"
+      }
+    },
+    "bes_buy_box_section_JMNdQJ": {
+      "type": "bes-buy-box-section",
+      "disabled": true,
+      "name": "Buy Box Section - BeS",
+      "settings": {}
+    },
+    "bes_timer_component_dMpMMK": {
+      "type": "bes-timer-component",
+      "name": "BeS - Simple Timer",
+      "settings": {
+        "title": "SUMMER SALE",
+        "subtitle": "50% Off Everything. Limited time only",
+        "end_date": "2025-08-01",
+        "end_time": "00:00:00",
+        "timezone": "Asia/Kolkata",
+        "bg_color": "#f2efe3",
+        "cta_text": "SHOP The SALE",
+        "cta_link": "/"
+      }
+    },
+    "bes_testimonials_RAqef3": {
+      "type": "bes-testimonials",
+      "blocks": {
+        "testimonial_YeP3Wf": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Martha M.",
+            "quote": "I love the quality and the fit! I never looked so dreamy.",
+            "image": "shopify://shop_images/gus-tu-njana-5ncDIQYVGeo-unsplash.jpg",
+            "product": "sunset-dress-test-product"
+          }
+        },
+        "testimonial_FnXCj7": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Jaime",
+            "quote": "There were hiccups - but it's here finally! I love my new dress - elegant and beautiful as advertised.",
+            "image": "shopify://shop_images/gus-tu-njana-kaGrbKVjk6M-unsplash.jpg",
+            "product": "alani-black-dress"
+          }
+        },
+        "testimonial_Jk9Gxn": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Uzi K",
+            "quote": "I look and feel like a model! Thank you BeSunset team :)",
+            "image": "shopify://shop_images/leo-mendes-iQpz1FAoTFQ-unsplash.jpg",
+            "product": "benitta-white-earrings"
+          }
+        },
+        "testimonial_H7rbXR": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Chrisie Angel",
+            "quote": "I seek comfort and sustainance over style and I got what I was looking for. Thanks BeSunset brand.",
+            "image": "shopify://shop_images/didi-paul-KilMFK3OYTY-unsplash.jpg",
+            "product": "alani-beige-dress"
+          }
+        },
+        "testimonial_Jt3zLM": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Lucy P.",
+            "quote": "I absolutely love the brand and would definitely come back!",
+            "image": "shopify://shop_images/yudhistira-panji-FuF_PepvNNc-unsplash.jpg",
+            "product": "breeze-black-dress"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_YeP3Wf",
+        "testimonial_FnXCj7",
+        "testimonial_Jk9Gxn",
+        "testimonial_H7rbXR",
+        "testimonial_Jt3zLM"
+      ],
+      "name": "Testimonials - BeS",
+      "settings": {
+        "title": "Honest Reviews",
+        "subtitle": "What our customers are saying across the globe",
+        "bg_color": "#ffffff"
+      }
+    },
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_f6873t": {
+          "type": "heading",
+          "settings": {
+            "heading": "Reducing our environmental impact",
+            "heading_size": "h1"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
+            "button_label_1": "KNOW MORE",
+            "button_link_1": "/",
             "button_style_secondary_1": true,
             "button_label_2": "",
             "button_link_2": "",
@@ -29,182 +356,52 @@
           }
         }
       },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
+      "block_order": ["heading_f6873t", "button"],
+      "disabled": true,
       "settings": {
+        "image": "shopify://shop_images/benjamin-wedemeyer-p3NHhNs0ye4-unsplash.jpg",
         "image_overlay_opacity": 40,
         "image_height": "large",
+        "image_behavior": "none",
         "desktop_content_position": "bottom-center",
-        "show_text_box": false,
         "desktop_content_alignment": "center",
+        "show_text_box": false,
         "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
         "show_text_below": false
-      }
-    },
-    "rich_text": {
-      "type": "rich-text",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "show_view_all": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 28,
-        "padding_bottom": 36
-      }
-    },
-    "collage": {
-      "type": "collage",
-      "blocks": {
-        "collection-0": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "product": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "second_image": false
-          }
-        },
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
-      ],
-      "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "video": {
       "type": "video",
+      "disabled": true,
       "settings": {
         "heading": "",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
         "heading_size": "h1",
+        "enable_video_looping": false,
+        "video_url": "https://www.youtube.com/watch?v=ObOqq1knVxs",
+        "cover_image": "shopify://shop_images/tall-grass-near-sandy-beach.jpg",
         "description": "",
         "full_width": false,
         "color_scheme": "scheme-1",
         "padding_top": 36,
         "padding_bottom": 36
       }
-    },
-    "multicolumn": {
-      "type": "multicolumn",
-      "blocks": {
-        "column1": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column2": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column3": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column1",
-        "column2",
-        "column3"
-      ],
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "swipe_on_mobile": false,
-        "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
     }
   },
   "order": [
+    "bes_hero_banner_kNKebk",
+    "bes_hero_banner_xV7nnH",
+    "bes_text_banner_LVeHdn",
+    "bes_exclusive_selection_T9Hg3p",
+    "bes_ticker_9efVyq",
+    "bes_category_shopping_mVfF9A",
+    "bes_story_banner_HHaC9V",
+    "bes_story_banner_KMteVk",
+    "bes_buy_box_section_JMNdQJ",
+    "bes_timer_component_dMpMMK",
+    "bes_testimonials_RAqef3",
     "image_banner",
-    "rich_text",
-    "featured_collection",
-    "collage",
-    "video",
-    "multicolumn"
+    "video"
   ]
 }

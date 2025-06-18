@@ -1,0 +1,209 @@
+{%- comment -%}
+  Custom product card with:
+  - Image hover for secondary image
+  - Add to Cart button below rating
+  - Uses product Liquid object
+{%- endcomment -%}
+
+<div class="bes-card-wrapper">
+  <div class="bes-card">
+    <div class="bes-card__image-wrapper">
+      {%- assign first_image = product.featured_media -%}
+      {%- assign second_image = product.media[1] -%}
+      <a href="{{ product.url }}" class="bes-card__image-link">
+        <img
+          src="{{ first_image | image_url: width: 600 }}"
+          alt="{{ first_image.alt | escape }}"
+          class="bes-card__image bes-card__image--primary"
+          loading="lazy"
+        >
+        {%- if second_image -%}
+          <img
+            src="{{ second_image | image_url: width: 600 }}"
+            alt="{{ second_image.alt | escape }}"
+            class="bes-card__image bes-card__image--secondary"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </a>
+    </div>
+    <div class="bes-card__info">
+      <a class="bes-card__info-link" href="{{ product.url }}">
+        <div class="bes-card__title lagoon-title">{{ product.title }}</div>
+        <div class="bes-card__price">
+          {% render 'price', product: product %}
+        </div>
+      </a>
+      <div class="bes-card__meta">
+        {%- if product.metafields.custom.icon != blank -%}
+          <img src="{{ product.metafields.custom.icon | file_url }}" class="bes-card__icon" alt="">
+        {%- endif -%}
+      </div>
+      <div class="bes-card__rating">
+        {% if product.metafields.reviews.rating.value %}
+          <span class="bes-card__stars">
+            {% assign rating = product.metafields.reviews.rating.value.rating | round %}
+            {% for i in (1..5) %}
+              {% if i <= rating %}
+                ★
+              {% else %}
+                ☆
+              {% endif %}
+            {% endfor %}
+          </span>
+          <span class="bes-card__rating-value">
+            ({{ product.metafields.reviews.rating.value.rating | round: 1 }})
+          </span>
+        {% endif %}
+      </div>
+      {% comment %} Check if the product is sold out {% endcomment %}
+      {% if product.available %}
+        <form method="post" action="/cart/add" class="bes-card__cart-form" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="bes-card__add-to-cart lagoon-button lagoon-button--primary">Add to Cart</button>
+        </form>
+      {% else %}
+        <button
+          type="submit"
+          class="bes-card__add-to-cart lagoon-button lagoon-button--primary lagoon-button--disabled"
+          disabled
+        >
+          Out of Stock
+        </button>
+      {% endif %}
+    </div>
+  </div>
+  <style>
+    .bes-card-wrapper {
+      width: 100%;
+    }
+    .bes-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: #fff;
+      overflow: hidden;
+      transition: transform 0.5s ease;
+    }
+    .bes-card__image-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+    }
+    .bes-card__image-link {
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .bes-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: opacity 0.5s ease, transform 2s ease;
+    }
+    .bes-card__image--primary {
+      opacity: 1;
+      z-index: 1;
+    }
+    .bes-card__image--secondary {
+      opacity: 0;
+      z-index: 2;
+    }
+    .bes-card:hover .bes-card__image,
+    .bes-card__image-wrapper:hover .bes-card__image {
+      transform: scale(1.1); /* Subtle zoom-in */
+    }
+    .bes-card__image-wrapper:hover .bes-card__image--primary {
+      opacity: 0;
+    }
+    .bes-card__image-wrapper:hover .bes-card__image--secondary {
+      opacity: 1;
+    }
+    .bes-card:hover {
+      cursor: pointer;
+    }
+    .bes-card:hover .bes-card__info {
+      background-color: #f0f0f0;
+      transition: background-color 0.5s ease;
+    }
+    /* Disable hover effect if no secondary image exists */
+    .bes-card__image-wrapper:not(:has(.bes-card__image--secondary)):hover .bes-card__image--primary {
+      opacity: 1;
+    }
+    .bes-card__info {
+      text-align: center;
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .bes-card__info-link {
+      text-decoration: none;
+    }
+    .bes-card__title {
+      color: #3e2f2a;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+      font-family: 'Quicksand', sans-serif;
+      text-transform: uppercase;
+    }
+    .bes-card__price {
+      font-size: 15px;
+      color: #888;
+      color: #5a443d;
+      margin-bottom: 8px;
+    }
+    .bes-card__meta {
+      margin-bottom: 8px;
+    }
+    .bes-card__icon {
+      width: 20px;
+      height: 20px;
+    }
+    .bes-card__rating {
+      font-size: 14px;
+      color: #222;
+      margin-bottom: 12px;
+    }
+    .bes-card__stars {
+      color: #222;
+      letter-spacing: 1px;
+    }
+    .bes-card__rating-value {
+      color: #888;
+      margin-left: 2px;
+    }
+    .bes-card__cart-form {
+      margin-top: 8px;
+    }
+    .price__regular {
+      display: none;
+    }
+
+    .lagoon-title {
+      overflow: hidden;
+      position: relative;
+    }
+    .lagoon-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: #3e2f2a;
+      transition: width 0.4s ease; /* Smooth transition from left */
+    }
+    .lagoon-title:hover {
+      width: 100%; /* Expand to full width on hover */
+    }
+  </style>
+</div>

@@ -1,0 +1,143 @@
+{% comment %} <link rel="stylesheet" href="{{ 'bes-text-banner.css' | asset_url }}" media="print" onload="this.media='all'"> {% endcomment %}
+
+<style>
+  .lagoon-ticker-wrapper {
+    font-family: "Aboreto", system-ui;
+    margin: 0 auto;
+    padding: 32px 32px;
+    background-color: {{ section.settings.background_color }};
+    overflow: hidden;
+    white-space: nowrap;
+    z-index: 1001;
+    position: relative;
+  }
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll var(--ticker-speed, 15s) linear infinite;
+    will-change: transform;
+  }
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    color: var(--ticker-color, #c7876b);
+    font-family: "Aboreto", system-ui;
+    /* font-size: 32px; */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-size: var(--ticker-font-size, 16px);
+  }
+  @media (max-width: 768px) {
+    .ticker-item {
+      font-size: var(--ticker-font-size-mobile, 16px);
+    }
+    .lagoon-ticker-wrapper {
+      padding: 24px 16px;
+    }
+  }
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
+
+<div class="lagoon-ticker-wrapper">
+  {% for block in section.blocks %}
+    <div
+      class="ticker-track"
+      style="
+        --ticker-color: {{ block.settings.text_color }};
+        --ticker-speed: {{ block.settings.speed }}s;
+        --ticker-font-size: {{ block.settings.ticker_font_size }}px;
+        --ticker-font-size-mobile: {{ block.settings.ticker_font_size_mobile }}px;
+      "
+    >
+      {% assign ticker_text = block.settings.text %}
+      {% for i in (1..2) %}
+        <div
+          class="ticker-item"
+        >
+          <span style="margin: 0 1rem;">{{ ticker_text }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+
+{% javascript %}
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Ticker - BeS",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f5f0e8"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ticker_text",
+      "name": "Ticker Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Ticker text",
+          "default": "TOGETHER, WE CAN CREATE A REVOLUTION"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#c7876b"
+        },
+        {
+          "type": "range",
+          "id": "ticker_font_size",
+          "label": "Ticker Text Font",
+          "min": 12,
+          "max": 120,
+          "step": 4,
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "ticker_font_size_mobile",
+          "label": "Ticker Text Font (Mobile)",
+          "min": 12,
+          "max": 120,
+          "step": 4,
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "speed",
+          "label": "Ticker speed (seconds)",
+          "min": 5,
+          "max": 30,
+          "step": 1,
+          "default": 15
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ticker - BeS",
+      "blocks": [
+        {
+          "type": "ticker_text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

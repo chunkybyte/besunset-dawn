@@ -1,10 +1,124 @@
-<link rel="stylesheet" href="{{ 'bes-header.css' | asset_url }}" media="print" onload="this.media='all'">
+{% comment %} <link rel="stylesheet" href="{{ 'bes-header.css' | asset_url }}" media="print" onload="this.media='all'"> {% endcomment %}
 
-<style></style>
+<style>
+  .bes-header-wrapper {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background: transparent;
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+  .bes-header-wrapper--colored {
+    background: #fffefc;
+  }
+  .bes-header-wrapper--colored header {
+    border: none;
+  }
+  .header__heading-logo-wrapper--inverted {
+    display: none;
+  }
+  .bes-header-wrapper--colored .header__heading-logo-wrapper--inverted {
+    display: block;
+  }
+  .bes-header-wrapper--colored .header__heading-logo-wrapper--main {
+    display: none;
+  }
+  .bes-header-wrapper--colored .lagoon-nav-actions svg {
+    color: black;
+  }
+  .bes-header-wrapper--hidden {
+    transform: translateY(-100%);
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: normal;
+    margin: 0 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #999;
+  }
+  .lagoon-nav-wrapper {
+    display: none;
+  }
+  .lagoon-nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    list-style-type: none;
+
+    font-family: 'Quicksand', sans-serif;
+    /* font-family: "Aboreto", system-ui; */
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    padding-left: 0;
+    margin: 0 -1rem;
+  }
+
+  .lagoon-nav ul li {
+    margin: 0 1rem;
+  }
+
+  .lagoon-nav ul li a {
+    color: black;
+    text-decoration: none;
+  }
+  .lagoon-nav ul li a:hover {
+    color: white;
+  }
+  .lagoon-nav-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+  .lagoon-nav-actions svg {
+    color: #fff;
+  }
+  .lagoon-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+  account-icon,
+  .header__icon {
+    margin: 0 10px;
+  }
+  .header__search,
+  account-icon {
+    display: none;
+  }
+  #lagoon-hamburger {
+    width: 35px;
+  }
+  @media (min-width: 750px) {
+    header {
+      align-items: center;
+      margin: 0 32px;
+      padding: 16px 0;
+    }
+    .lagoon-nav-wrapper {
+      display: block;
+    }
+    .header__search {
+      display: inline-flex;
+    }
+    account-icon {
+      display: flex;
+    }
+    #lagoon-hamburger {
+      display: none;
+    }
+  }
+</style>
 
 <header>
-  <div>
-    {% comment %} Getting Navigation from Shopify Object {% endcomment %}
+  <div id="lagoon-hamburger"></div>
+  <div class="lagoon-nav-wrapper">
     {% assign main_menu = linklists['main-menu'] %}
     {% if main_menu %}
       <nav class="lagoon-nav">
@@ -18,21 +132,137 @@
       </nav>
     {% endif %}
   </div>
-  <div>
-    {% comment %} Logo {% endcomment %}
+  <div class="lagoon-logo">
+    {%- if request.page_type == 'index' -%}
+      <h1 class="header__heading">
+    {%- endif -%}
+    <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+      {%- if settings.logo != blank -%}
+        <div class="header__heading-logo-wrapper header__heading-logo-wrapper--main">
+          {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+          {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+          {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
+          {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+          {{
+            settings.logo
+            | image_url: width: 600
+            | image_tag:
+              class: 'header__heading-logo',
+              widths: widths,
+              height: logo_height,
+              width: settings.logo_width,
+              alt: logo_alt,
+              sizes: sizes,
+              preload: true
+          }}
+        </div>
+        <div class="header__heading-logo-wrapper header__heading-logo-wrapper--inverted">
+          {%- assign logo_alt = settings.logo_inverted.alt | default: shop.name | escape -%}
+          {%- assign logo_height = settings.logo_width | divided_by: settings.logo_inverted.aspect_ratio -%}
+          {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
+          {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+          {{
+            settings.logo_inverted
+            | image_url: width: 600
+            | image_tag:
+              class: 'header__heading-logo',
+              widths: widths,
+              height: logo_height,
+              width: settings.logo_width,
+              alt: logo_alt,
+              sizes: sizes,
+              preload: true
+          }}
+        </div>
+      {%- else -%}
+        <span class="h2">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+    {%- if request.page_type == 'index' -%}
+      </h1>
+    {%- endif -%}
   </div>
-  <div>
-    {% comment %} Cart icon, Account, Search, About {% endcomment %}
+  <div class="lagoon-nav-actions">
+    {% render 'header-search', input_id: 'Search-In-Modal' %}
+
+    <account-icon>
+      {%- if customer and customer.has_avatar? -%}
+        {{ customer | avatar }}
+      {%- else -%}
+        <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+      {%- endif -%}
+    </account-icon>
+
+    <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+      {% if cart == empty %}
+        <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+      {% else %}
+        <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+      {% endif %}
+      <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+      {%- if cart != empty -%}
+        <div class="cart-count-bubble">
+          {%- if cart.item_count < 100 -%}
+            <span aria-hidden="true">{{ cart.item_count }}</span>
+          {%- endif -%}
+          <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+        </div>
+      {%- endif -%}
+    </a>
   </div>
 </header>
 
 {% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    const header = document.querySelector('.bes-header-wrapper');
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', function () {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > 100) {
+        header.classList.add('bes-header-wrapper--colored');
+      } else {
+        header.classList.remove('bes-header-wrapper--colored');
+      }
+
+      if (scrollTop > lastScrollTop) {
+        header.classList.add('bes-header-wrapper--hidden');
+      } else {
+        header.classList.remove('bes-header-wrapper--hidden');
+      }
+      lastScrollTop = scrollTop;
+    });
+
+    if (lottie) {
+      const lagoonHamburger = document.getElementById('lagoon-hamburger');
+
+      const lagoonAnimation = lottie.loadAnimation({
+        container: lagoonHamburger,
+        renderer: 'svg',
+        loop: false,
+        autoplay: false,
+        path: 'https://cdn.shopify.com/s/files/1/0760/2785/5104/files/menuV3.json?v=1748545343',
+      });
+
+      let isMenuOpen = false;
+      lagoonHamburger.addEventListener('click', function () {
+        if (isMenuOpen) {
+          lagoonAnimation.setDirection(-1); // Reverse
+        } else {
+          lagoonAnimation.setDirection(1); // Forward
+        }
+        lagoonAnimation.play();
+        isMenuOpen = !isMenuOpen;
+      });
+    }
+  });
 {% endjavascript %}
 
 {% schema %}
 {
   "name": "Header - BeS",
-  "class": "section-header",
+  "class": "bes-header-wrapper",
   "settings": [
     {
       "type": "link_list",

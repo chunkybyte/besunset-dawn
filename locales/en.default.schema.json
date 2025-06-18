@@ -144,6 +144,9 @@
         "logo_image": {
           "label": "Logo"
         },
+        "logo_image_inverted": {
+          "label": "Logo Inverted"
+        },
         "logo_width": {
           "label": "Width"
         },

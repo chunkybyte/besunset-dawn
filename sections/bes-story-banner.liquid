@@ -1,0 +1,222 @@
+<style>
+  .bes-story-banner-section {
+    max-width: 1360px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 32px;
+  }
+  .bes-story-banner-section.flipped {
+    flex-direction: row-reverse;
+  }
+  .bes-story-banner-text {
+    flex: 1 1 50%;
+    /* max-width: 500px; */
+    padding: 0 32px;
+  }
+  .bes-story-banner-subtitle {
+    letter-spacing: 2px;
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .bes-story-banner-title {
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    font-family: 'Aboreto', system-ui;
+    color: #444;
+  }
+  .bes-story-banner-copy {
+    font-size: 16px;
+    color: #999;
+    margin-bottom: 28px;
+  }
+  .bes-story-banner-media {
+    flex: 1 1 60%;
+    position: relative;
+    min-width: 320px;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bes-story-banner-main-image {
+    width: 60%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .bes-story-banner-secondary-media {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    height: 50%;
+    object-fit: cover;
+    z-index: 2;
+    background: #fff;
+  }
+  .bes-story-banner-section.flipped .bes-story-banner-secondary-media {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50%;
+    transform: translateY(-50%);
+    right: unset;
+  }
+  .bes-story-banner-section.flipped .bes-story-banner-media {
+    justify-content: flex-start;
+  }
+  @media (max-width: 765px) {
+    .bes-story-banner-section {
+      flex-direction: column;
+      gap: 32px;
+      padding: 48px 0;
+    }
+    .bes-story-banner-text {
+      padding: 0 16px;
+    }
+    .bes-story-banner-section.flipped {
+      flex-direction: column;
+    }
+    .bes-story-banner-media {
+      padding: 0 16px;
+    }
+    .bes-story-banner-media {
+      justify-content: flex-end;
+    }
+    .bes-story-banner-secondary-media {
+      right: 50%;
+      left: unset;
+    }
+  }
+</style>
+
+<section class="bes-story-banner-section{% if section.settings.media_position == 'left' %} flipped{% endif %}">
+  <div class="bes-story-banner-text">
+    {% if section.settings.subtitle != blank %}
+      <div class="bes-story-banner-subtitle">{{ section.settings.subtitle }}</div>
+    {% endif %}
+    {% if section.settings.title != blank %}
+      <div class="bes-story-banner-title">{{ section.settings.title }}</div>
+    {% endif %}
+    {% if section.settings.copy != blank %}
+      <div class="bes-story-banner-copy">{{ section.settings.copy }}</div>
+    {% endif %}
+    {% if section.settings.cta_link != blank and section.settings.cta_text != blank %}
+      <a class="bes-story-banner-cta lagoon-button lagoon-button--primary" href="{{ section.settings.cta_link }}">
+        {{- section.settings.cta_text -}}
+      </a>
+    {% endif %}
+  </div>
+  <div class="bes-story-banner-media">
+    {% if section.settings.main_image != blank %}
+      <img
+        class="bes-story-banner-main-image"
+        src="{{ section.settings.main_image | image_url: width: 760 }}"
+        alt="Story Main Image"
+        loading="lazy"
+        width="380"
+        height="480"
+      >
+    {% endif %}
+    {% if section.settings.secondary_video_url != blank %}
+      <video
+        class="bes-story-banner-secondary-media"
+        src="{{ section.settings.secondary_video_url }}"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+      ></video>
+    {% elsif section.settings.secondary_image != blank %}
+      <img
+        class="bes-story-banner-secondary-media"
+        src="{{ section.settings.secondary_image | image_url: width: 520 }}"
+        alt="Story Secondary Image"
+        loading="lazy"
+        width="260"
+        height="200"
+      >
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Story Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "OUR STORY"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Inspiring women to cherish themselves and our planet"
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Copy Text",
+      "default": "Built on a foundation of environmental consciousness and driven by a sense of self-empowerment, we create timeless products that pay homage to the beauty of femininity."
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Link"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main Image"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Media (Image or Video)"
+    },
+    {
+      "type": "image_picker",
+      "id": "secondary_image",
+      "label": "Secondary Image (optional)"
+    },
+    {
+      "type": "url",
+      "id": "secondary_video_url",
+      "label": "Secondary Video URL (optional, MP4 only)"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Flip Layout",
+      "options": [
+        { "value": "left", "label": "Media Left, Text Right" },
+        { "value": "right", "label": "Media Right, Text Left" }
+      ],
+      "default": "right"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story Banner",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

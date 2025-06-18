@@ -1,0 +1,691 @@
+{% comment %} {{ 'section-image-banner.css' | asset_url | stylesheet_tag }} {% endcomment %}
+
+{% liquid
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+%}
+
+<style>
+  .lagoon-hero-banner--{{ section.id }} {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: space-between;
+    background-color: {{ section.settings.bg_color }};
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Luxury Animation Classes */
+  .lagoon-hero-banner--{{ section.id }}.animate--luxury-fade-in {
+    opacity: 0;
+    animation: luxuryFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  .lagoon-hero-banner--{{ section.id }}.animate--luxury-fade-in .lagoon-hero-banner__section-content {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: luxuryContentSlideIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+  }
+
+  .lagoon-hero-banner--{{ section.id }}.animate--luxury-fade-in .lagoon-hero-banner__section-image {
+    opacity: 0;
+    transform: scale(1.1);
+    animation: luxuryImageZoomIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s forwards;
+  }
+
+  /* Staggered content animations */
+  .lagoon-hero-banner--{{ section.id }}.animate--luxury-fade-in .lagoon-hero-banner__heading {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: luxuryTextSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
+  }
+
+  .lagoon-hero-banner--{{ section.id }}.animate--luxury-fade-in .lagoon-hero-banner__text {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: luxuryTextSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards;
+  }
+
+  .lagoon-hero-banner--{{ section.id }}.animate--luxury-fade-in .lagoon-hero-banner__buttons {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: luxuryTextSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s forwards;
+  }
+
+  /* Parallax effect for image */
+  .lagoon-hero-banner--{{ section.id }} .lagoon-hero-banner__section-image {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Luxury hover effects */
+  .lagoon-hero-banner__buttons .button {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lagoon-hero-banner__buttons .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(62, 47, 42, 0.2);
+  }
+
+  .lagoon-hero-banner__buttons .button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .lagoon-hero-banner__buttons .button:hover::before {
+    left: 100%;
+  }
+
+  /* Keyframe Animations */
+  @keyframes luxuryFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes luxuryContentSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes luxuryImageZoomIn {
+    from {
+      opacity: 0;
+      transform: scale(1.1);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes luxuryTextSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Parallax scroll effect */
+  .lagoon-hero-banner--{{ section.id }}.parallax-enabled .lagoon-hero-banner__section-image {
+    transform: translateY(var(--parallax-offset, 0));
+    transition: transform 0.1s ease-out;
+  }
+
+  #lagoon-banner-{{ section.id }}::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+    background-color: black;
+  }
+  .lagoon-hero-banner__section-content {
+    padding: 32px 16px;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: center;
+  }
+  .lagoon-hero-banner--{{ section.id }} .lagoon-hero-banner__section-content-inner {
+    max-width: {{ section.settings.hero_banner_content_width }}%;
+    text-align: {{ section.settings.hero_banner_content_alignment }};
+  }
+  /* Horizontal Content Alignment */
+  .lc--hori-left {
+    align-items: flex-start;
+  }
+  .lc--hori-left .lagoon-hero-banner__heading {
+    text-align: left;
+  }
+  .lc--hori-right {
+    align-items: flex-end;
+  }
+  .lc--hori-right .lagoon-hero-banner__heading {
+    text-align: right;
+  }
+  .lc--hori-center {
+    align-items: center;
+  }
+  .lc--hori-center .lagoon-hero-banner__heading {
+    text-align: center;
+  }
+  /* Vertical Content Alignment */
+  .lc--verti-top {
+    align-self: baseline;
+  }
+  .lc--verti-middle {
+    align-self: center;
+  }
+  .lc--verti-bottom {
+    align-self: end;
+  }
+
+  .lagoon-hero-banner--{{ section.id }} .lagoon-hero-banner__section-image {
+    position: relative;
+    flex: 1;
+    background-image: url('{{ section.settings.image | image_url: width: 3840 }}');
+    background-size: cover;
+    background-position: {{  section.settings.desktop_image_position }};
+
+    {% if section.settings.hero_banner_height == 'auto-height' %}
+      min-height: auto;
+    {% else %}
+      min-height: calc(100vh - 300px);
+    {% endif %}
+    width: 100%;
+  }
+  .lagoon-hero-banner__heading {
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+  p, span, .lagoon-hero-banner__text {
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .lagoon-hero-banner__heading {
+    font-size: 48px;
+    line-height: 1.2;
+    margin: 0;
+    margin-bottom: 16px;
+  }
+  .lagoon-hero-banner__text.subtitle {
+    font-size: 12px;
+    margin: 0;
+    margin-bottom: 12px;
+  }
+  .lagoon-hero-banner__text.body {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    margin-bottom: 24px;
+  }
+
+  .lagoon-hero-banner__buttons .button::before {
+    display: none;
+  }
+
+  .lagoon-hero-banner__buttons .button {
+    padding: 0.75rem 1.5rem;
+    position: relative;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: #3e2f2a;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    z-index: 1;
+    transition: all 0.3s ease;
+  }
+  .lagoon-hero-banner__buttons .button {
+    background-color: transparent;
+    color: #3e2f2a;
+    border: 2px solid #3e2f2a;
+    position: relative;
+  }
+
+  .lagoon-hero-banner__buttons .button::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: -1px;
+    background-color: #3e2f2a;
+    transition: width 0.3s ease;
+    z-index: -1;
+  }
+
+  .lagoon-hero-banner__buttons .button:hover::after {
+    width: 100%;
+  }
+
+  .lagoon-hero-banner__buttons .button:hover {
+    color: white;
+  }
+
+  @media (min-width: 750px) {
+    .lagoon-hero-banner {
+      flex-direction: row;
+    }
+    .lagoon-hero-banner--{{ section.id }} .lagoon-hero-banner__section-image {
+      {% if section.settings.hero_banner_height == 'auto-height' %}
+        height: auto;
+      {% else %}
+        height: 100vh;
+      {% endif %}
+      width: auto;
+    }
+    .lagoon-hero-banner--{{ section.id }} .lagoon-hero-banner__section-content {
+      margin: 80px 0;
+      padding: 10px 32px;
+      width: {{ section.settings.content_width | divided_by: 100.0 | times: 100 }}%;
+      height: 100%;
+    }
+  }
+  @media (max-width: 1024px) {
+    .lagoon-hero-banner--{{ section.id }} .lagoon-hero-banner__section-content-inner {
+      max-width: 100%;
+    }
+    .lagoon-hero-banner--{{ section.id }} .lagoon-hero-banner__section-content {
+      padding: 16px 32px;
+      margin: 40px 0;
+    }
+    .lagoon-hero-banner--{{ section.id }} .lagoon-hero-banner__section-content-inner .lagoon-hero-banner__heading {
+      font-size: 32px;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .lagoon-hero-banner--{{ section.id }}.animate--luxury-fade-in,
+    .lagoon-hero-banner--{{ section.id }}.animate--luxury-fade-in * {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .lagoon-hero-banner__buttons .button {
+      transition: none !important;
+    }
+
+    .lagoon-hero-banner__buttons .button:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+</style>
+
+<div class="lagoon-hero-banner lagoon-hero-banner--{{ section.id }}">
+  <div class="lagoon-hero-banner__section-content {{ section.settings.desktop_content_position }}">
+    <div class="lagoon-hero-banner__section-content-inner">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'heading' %}
+            <{{ block.settings.heading_size }} class="lagoon-hero-banner__heading">
+              {{ block.settings.heading | richtext }}
+            </{{ block.settings.heading_size }}>
+          {% when 'text' %}
+            <p class="lagoon-hero-banner__text {{ block.settings.text_style }}">
+              {{ block.settings.text | richtext }}
+            </p>
+          {% when 'buttons' %}
+            <div class="lagoon-hero-banner__buttons">
+              {% if block.settings.button_label_1 != blank %}
+                <a
+                  href="{{ block.settings.button_link_1 }}"
+                  class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% endif %}"
+                  data="{{ block.settings.button_label_1 }}"
+                >
+                  {{ block.settings.button_label_1 }}
+                </a>
+              {% endif %}
+              {% if block.settings.button_label_2 != blank %}
+                <a
+                  href="{{ block.settings.button_link_2 }}"
+                  class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% endif %}"
+                >
+                  {{ block.settings.button_label_2 }}
+                </a>
+              {% endif %}
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="lagoon-hero-banner__section-image" id="lagoon-banner-{{ section.id }}">
+    {% comment %}
+      {%- liquid
+        assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio
+      -%}
+      {{
+        section.settings.image
+        | image_url: width: 3840
+        | image_tag: width: section.settings.image.width, height: image_height, fetchpriority: fetch_priority
+      }}
+    {% endcomment %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero Banner - BeS",
+  "tag": "section",
+  "class": "section-hero-banner",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "desktop_image_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Image Positioning"
+    },
+    {
+      "type": "select",
+      "id": "hero_banner_height",
+      "options": [
+        {
+          "value": "full-height",
+          "label": "Full Height"
+        },
+        {
+          "value": "auto-height",
+          "label": "Auto Height (Content Based)"
+        }
+      ],
+      "default": "full-height",
+      "label": "Banner Height"
+    },
+    {
+      "type": "range",
+      "id": "hero_banner_content_width",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Text Container - Inner Width (%)",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "hero_banner_content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Text Container - Inner Alignment"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Content Width (%)",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "t:sections.image-banner.settings.content.content"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_position",
+      "options": [
+        {
+          "value": "lc--verti-top lc--hori-left",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__1.label"
+        },
+        {
+          "value": "lc--verti-top lc--hori-center",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__2.label"
+        },
+        {
+          "value": "lc--verti-top lc--hori-right",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__3.label"
+        },
+        {
+          "value": "lc--verti-middle lc--hori-left",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__4.label"
+        },
+        {
+          "value": "lc--verti-middle lc--hori-center",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__5.label"
+        },
+        {
+          "value": "lc--verti-middle lc--hori-right",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__6.label"
+        },
+        {
+          "value": "lc--verti-bottom lc--hori-left",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__7.label"
+        },
+        {
+          "value": "lc--verti-bottom lc--hori-center",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__8.label"
+        },
+        {
+          "value": "lc--verti-bottom lc--hori-right",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__9.label"
+        }
+      ],
+      "default": "lc--verti-middle lc--hori-left",
+      "label": "t:sections.image-banner.settings.desktop_content_position.label"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.image-banner.blocks.heading.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "t:sections.image-banner.blocks.heading.settings.heading.default",
+          "label": "t:sections.image-banner.blocks.heading.settings.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_size.options__1.label"
+            },
+            {
+              "value": "h1",
+              "label": "t:sections.all.heading_size.options__2.label"
+            },
+            {
+              "value": "h0",
+              "label": "t:sections.all.heading_size.options__3.label"
+            },
+            {
+              "value": "hxl",
+              "label": "t:sections.all.heading_size.options__4.label"
+            },
+            {
+              "value": "hxxl",
+              "label": "t:sections.all.heading_size.options__5.label"
+            }
+          ],
+          "default": "h1",
+          "label": "t:sections.all.heading_size.label"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "t:sections.image-banner.blocks.text.name",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "default": "t:sections.image-banner.blocks.text.settings.text.default",
+          "label": "t:sections.image-banner.blocks.text.settings.text.label"
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "options": [
+            {
+              "value": "body",
+              "label": "t:sections.image-banner.blocks.text.settings.text_style.options__1.label"
+            },
+            {
+              "value": "subtitle",
+              "label": "t:sections.image-banner.blocks.text.settings.text_style.options__2.label"
+            },
+            {
+              "value": "caption-with-letter-spacing",
+              "label": "t:sections.image-banner.blocks.text.settings.text_style.options__3.label"
+            }
+          ],
+          "default": "body",
+          "label": "t:sections.image-banner.blocks.text.settings.text_style.label"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "t:sections.image-banner.blocks.buttons.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "t:sections.image-banner.blocks.buttons.settings.header_1.content"
+        },
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "default": "t:sections.image-banner.blocks.buttons.settings.button_label_1.default",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_label_1.label",
+          "info": "t:sections.image-banner.blocks.buttons.settings.button_label_1.info"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_link_1.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_1",
+          "default": false,
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_1.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.image-banner.blocks.buttons.settings.header_2.content"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "default": "t:sections.image-banner.blocks.buttons.settings.button_label_2.default",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_label_2.label",
+          "info": "t:sections.image-banner.blocks.buttons.settings.button_label_2.info"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_link_2.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_2",
+          "default": false,
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_2.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner - BeS",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "buttons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
