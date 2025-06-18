@@ -15,15 +15,38 @@
 </style>
 
 <div>
-  <p class="lagoon-text-banner__subtitle">Welcome To</p>
-  <h2 class="lagoon-text-banner__heading2">The BeSunset Brand</h2>
-  <p class="lagoon-text-banner__body">
-    We started BeSunset with a clear vision to transcend trends, and instead design future vintage pieces that would be
-    loved for seasons to come.
-  </p>
+  {% if section.settings.subtitle != blank %}
+    <p class="lagoon-text-banner__subtitle">
+      {{ section.settings.subtitle }}
+    </p>
+  {% endif %}
+  {% if section.settings.heading != blank %}
+    <h2 class="lagoon-text-banner__heading2">
+      {{ section.settings.heading }}
+    </h2>
+  {% endif %}
+  {% if section.settings.body != blank %}
+    <p class="lagoon-text-banner__body">
+      {{ section.settings.body }}
+    </p>
+  {% endif %}
   <div class="lagoon-text-banner__ctas">
-    <a href="/" class="lagoon-text-banner__button lagoon-text-banner__button--primary">Learn More</a>
-    <a href="/" class="lagoon-text-banner__button lagoon-text-banner__button--secondary">All Collections</a>
+    {% if section.settings.button_label_1 != blank %}
+      <a
+        href="{{ section.settings.button_link_1 }}"
+        class="lagoon-text-banner__button lagoon-text-banner__button--primary"
+      >
+        {{ section.settings.button_label_1 }}
+      </a>
+    {% endif %}
+    {% if section.settings.button_label_2 != blank %}
+      <a
+        href="{{ section.settings.button_link_2 }}"
+        class="lagoon-text-banner__button lagoon-text-banner__button--secondary"
+      >
+        {{ section.settings.button_label_2 }}
+      </a>
+    {% endif %}
   </div>
 </div>
 
@@ -34,7 +57,43 @@
 {
   "name": "Text Banner - BeS",
   "class": "lagoon-text-banner",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "Button Label 1"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Button Link 1"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Button Label 2"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Button Link 2"
+    }
+  ],
   "presets": [
     {
       "name": "Text Banner - BeS"
