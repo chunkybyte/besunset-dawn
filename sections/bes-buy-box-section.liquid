@@ -1,0 +1,132 @@
+{% comment %} <link rel="stylesheet" href="{{ 'bes-text-banner.css' | asset_url }}" media="print" onload="this.media='all'"> {% endcomment %}
+
+<style>
+  .lagoon-buy-box {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f5f0e8;
+    color: #3e2f2a;
+  }
+  .lagoon-buy-box-part {
+    width: 50%;
+    padding: 1rem;
+  }
+  .lagoon-buy-box__image-container {
+    display: flex;
+  }
+  .lagoon-buy-box__thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100px; /* Fixed width for thumbnails */
+  }
+  .lagoon-buy-box__thumbnail {
+    width: 100%;
+    height: 100px; /* Fixed height for thumbnails */
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+    opacity: 0.7;
+  }
+  .lagoon-buy-box__thumbnail.active,
+  .lagoon-buy-box__thumbnail:hover {
+    border-color: #3e2f2a; /* Brown border on active/hover */
+    opacity: 1;
+  }
+  .lagoon-buy-box__main-image-container {
+    flex: 1;
+  }
+  .lagoon-buy-box__main-image {
+    width: 100%;
+    height: 500px; /* Fixed height for main image */
+    object-fit: cover;
+    border: 1px solid #3e2f2a;
+  }
+  .lagoon-buy-box__product-subtitle {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #888;
+  }
+  .lagoon-buy-box__product-title {
+    text-transform: uppercase;
+    margin: 12px 0;
+    letter-spacing: 1.5px;
+  }
+</style>
+
+<div class="lagoon-buy-box">
+  <div class="lagoon-buy-box-part lagoon-buy-box__image-container">
+    {% comment %} Thumbnail Gallery {% endcomment %}
+    <div class="lagoon-buy-box__thumbnails">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0760/2785/5104/files/8435636367753_08.jpg?v=1748862857"
+        alt="Grace Lagoon Blouse"
+        class="lagoon-buy-box__thumbnail lagoon-buy-box__product-image"
+      >
+      <img
+        src="https://cdn.shopify.com/s/files/1/0760/2785/5104/files/8435636367753_05.jpg?v=1748862857"
+        alt=""
+        class="lagoon-buy-box__thumbnail"
+      >
+      <img
+        src="https://cdn.shopify.com/s/files/1/0760/2785/5104/files/8435636367753_02.jpg?v=1748862857"
+        alt=""
+        class="lagoon-buy-box__thumbnail"
+      >
+    </div>
+    {% comment %} Main Image {% endcomment %}
+    <div class="lagoon-buy-box__main-image-container">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0760/2785/5104/files/8435636367753_05.jpg?v=1748862857"
+        alt="Main Product Image"
+        class="lagoon-buy-box__main-image"
+        id="main-image"
+      >
+    </div>
+  </div>
+  <div class="lagoon-buy-box-part lagoon-buy-box__description-container">
+    <p class="lagoon-buy-box__product-subtitle">Sparkle and Shine</p>
+    <h1 class="lagoon-buy-box__product-title">Grace Lagoon Blouse</h1>
+    <p class="lagoon-buy-box__product-price">₹ 13,500.00</p>
+    <p class="lagoon-buy-box__product-description">
+      A timeless piece that embodies elegance and comfort, perfect for any occasion.
+    </p>
+    <div class="lagoon-buy-box__product-sizes">
+      <label for="size-select" class="lagoon-buy-box__size-label">Select Size:</label>
+      <select id="size-select" class="lagoon-buy-box__size-select">
+        <option value="xs">XS</option>
+        <option value="s">S</option>
+        <option value="m">M</option>
+        <option value="l">L</option>
+        <option value="xl">XL</option>
+      </select>
+    </div>
+    <div class="lagoon-buy-box__product-quantity">
+      <label for="quantity-input" class="lagoon-buy-box__quantity-label">Quantity:</label>
+      <input type="number" id="quantity-input" class="lagoon-buy-box__quantity-input" value="1" min="1">
+    </div>
+    <div>
+      <button class="lagoon-buy-box__add-to-cart-button">Add to Cart</button>
+      <button class="lagoon-buy-box__buy-now-button">Buy Now</button>
+    </div>
+  </div>
+</div>
+
+{% javascript %}
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Buy Box Section - BeS",
+  "class": "lagoon-buy-box-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Buy Box Section - BeS"
+    }
+  ]
+}
+{% endschema %}

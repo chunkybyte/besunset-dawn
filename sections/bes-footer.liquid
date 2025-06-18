@@ -1,0 +1,257 @@
+<style>
+  .bes-footer {
+    background: {{ section.settings.bg_color }};
+    color: #3e2f2a;
+    padding: 48px 32px;
+    font-family: 'Quicksand', sans-serif;
+  }
+  .bes-footer__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 32px;
+  }
+  .bes-footer__col {
+    flex: 1 1 220px;
+    min-width: 220px;
+    margin-bottom: 32px;
+  }
+  .bes-footer__title {
+    font-family: 'Aboreto', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    color: #222;
+  }
+  .bes-footer__copy {
+    font-size: 14px;
+    font-weight: 400;
+    color: #888;
+    margin-bottom: 16px;
+  }
+  .bes-footer__menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .bes-footer__menu li {
+    margin-bottom: 10px;
+  }
+  .bes-footer__menu a {
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .bes-footer__menu a:hover {
+    color: #000;
+  }
+  .bes-footer__newsletter {
+    max-width: 320px;
+  }
+  .bes-footer__newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bes-footer__newsletter-input {
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .bes-footer__newsletter-btn {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    padding: 10px 0;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .bes-footer__social {
+    margin-top: 24px;
+  }
+  .list-social {
+    display: flex;
+    gap: 16px;
+  }
+  .bes-footer__menu-container {
+    margin-left: 32px;
+    display: flex;
+    gap: 64px;
+  }
+  @media (max-width: 725px) {
+    .bes-footer {
+      padding: 32px 16px;
+    }
+    .bes-footer__container {
+      flex-direction: column;
+      gap: 0;
+    }
+    .bes-footer__menu-container {
+      flex-direction: column;
+      gap: 24px;
+      margin-left: 0;
+    }
+    .bes-footer__newsletter {
+      width: 100%;
+      max-width: 500px;
+    }
+    .bes-footer__col {
+      margin-bottom: 32px;
+    }
+  }
+</style>
+
+<footer class="bes-footer">
+  <div class="bes-footer__container">
+    <!-- About the Shop -->
+    <div class="bes-footer__col">
+      <div class="bes-footer__title">{{ section.settings.footer_title }}</div>
+      <div class="bes-footer__copy">{{ section.settings.footer_copy }}</div>
+      <div class="bes-footer__social">
+        <ul class="list-unstyled list-social">
+          {% if section.settings.social_facebook != blank %}
+            <li class="list-social__item">
+              <a
+                href="{{ section.settings.social_facebook }}"
+                class="link list-social__link"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="svg-wrapper">{{ 'icon-facebook.svg' | inline_asset_content }}</span>
+                <span class="visually-hidden">Facebook</span>
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.social_instagram != blank %}
+            <li class="list-social__item">
+              <a
+                href="{{ section.settings.social_instagram }}"
+                class="link list-social__link"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="svg-wrapper">{{ 'icon-instagram.svg' | inline_asset_content }}</span>
+                <span class="visually-hidden">Instagram</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    <!-- Shop Menu -->
+    <div class="bes-footer__menu-container bes-footer__col">
+      <div>
+        <div class="bes-footer__title">{{ section.settings.menu_1_title }}</div>
+        <ul class="bes-footer__menu">
+          {% for link in linklists[section.settings.menu_1].links %}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <!-- About Menu -->
+      <div>
+        <div class="bes-footer__title">{{ section.settings.menu_2_title }}</div>
+        <ul class="bes-footer__menu">
+          {% for link in linklists[section.settings.menu_2].links %}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <!-- Newsletter -->
+    <div class="bes-footer__col bes-footer__newsletter">
+      <div class="bes-footer__title">{{ section.settings.newsletter_title }}</div>
+      <div class="bes-footer__copy">{{ section.settings.newsletter_copy }}</div>
+      <form
+        method="post"
+        action="/contact#footer-newsletter"
+        class="bes-footer__newsletter-form"
+        accept-charset="UTF-8"
+      >
+        <input type="hidden" name="form_type" value="customer">
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input class="bes-footer__newsletter-input" type="email" name="contact[email]" placeholder="E-mail" required>
+        <button class="bes-footer__newsletter-btn lagoon-button lagoon-button--primary" type="submit">SUBSCRIBE</button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "BeS Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "footer_title",
+      "label": "Footer Title",
+      "default": "ABOUT THE SHOP"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_copy",
+      "label": "Footer Copy",
+      "default": "<p>Describe your shop here. You can add <em>emphasis</em> or <strong>bold</strong> text.</p>"
+    },
+    {
+      "type": "text",
+      "id": "menu_1_title",
+      "label": "Menu 1 Title",
+      "default": "SHOP"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "Shop Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "menu_2_title",
+      "label": "Menu 2 Title",
+      "default": "ABOUT"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "About Menu",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter Title",
+      "default": "NEWSLETTER"
+    },
+    {
+      "type": "richtext",
+      "id": "newsletter_copy",
+      "label": "Newsletter Copy",
+      "default": "<p>Subscribe to get notified about product launches, special offers and company news.</p>"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook",
+      "label": "Facebook Link"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "Instagram Link"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f7f7f7"
+    }
+  ]
+}
+{% endschema %}
