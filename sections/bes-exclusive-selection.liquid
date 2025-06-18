@@ -17,6 +17,36 @@
     padding: 0 16px;
     text-align: center;
   }
+
+  /* Animation classes for fade-in effect */
+  .fade-in-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-in-element.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger animation delays for different elements */
+  .fade-in-element:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+  .fade-in-element:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+  .fade-in-element:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+  .fade-in-element:nth-child(4) {
+    transition-delay: 0.4s;
+  }
+  .fade-in-element:nth-child(5) {
+    transition-delay: 0.5s;
+  }
+
   .weekly-selection__subtitle {
     font-size: 14px;
     letter-spacing: 2px;
@@ -150,11 +180,11 @@
 <section class="weekly-selection">
   <div class="weekly-selection__header">
     {% if section.settings.title != blank %}
-      <div class="weekly-selection__subtitle">
+      <div class="weekly-selection__subtitle fade-in-element">
         {{ section.settings.title }}
       </div>
     {% endif %}
-    <div class="weekly-selection__tabs" id="weekly-selection-tabs">
+    <div class="weekly-selection__tabs fade-in-element" id="weekly-selection-tabs">
       {% for block in section.blocks %}
         <button
           class="weekly-selection__tab{% if forloop.first %} weekly-selection__tab--active{% endif %}"
@@ -167,7 +197,7 @@
     </div>
   </div>
 
-  <div class="weekly-selection__products-outer">
+  <div class="weekly-selection__products-outer fade-in-element">
     {% for block in section.blocks %}
       <div
         class="weekly-selection__products"
@@ -202,6 +232,28 @@
 
 {% javascript %}
   document.addEventListener('DOMContentLoaded', function () {
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.2, // Trigger when 20% of the element is visible
+      rootMargin: '0px 0px -50px 0px', // Start animation slightly before element is fully in view
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          // Once animated, we can stop observing
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    const fadeElements = document.querySelectorAll('.fade-in-element');
+    fadeElements.forEach((element) => {
+      observer.observe(element);
+    });
+
     // Tab switching
     const tabs = document.querySelectorAll('.weekly-selection__tab');
     const tabContents = document.querySelectorAll('[data-tab-content]');

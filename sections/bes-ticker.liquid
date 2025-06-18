@@ -10,7 +10,16 @@
     white-space: nowrap;
     z-index: 1001;
     position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   }
+
+  .lagoon-ticker-wrapper.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   .ticker-track {
     display: flex;
     width: max-content;
@@ -45,7 +54,7 @@
   }
 </style>
 
-<div class="lagoon-ticker-wrapper">
+<div class="lagoon-ticker-wrapper" data-section-id="{{ section.id }}">
   {% for block in section.blocks %}
     <div
       class="ticker-track"
@@ -68,8 +77,31 @@
   {% endfor %}
 </div>
 
-{% javascript %}
-{% endjavascript %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tickerElements = document.querySelectorAll('.lagoon-ticker-wrapper');
+
+    tickerElements.forEach((tickerElement) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('fade-in');
+              // Once animation is triggered, we can stop observing
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.1, // Trigger when 10% of the element is visible
+          rootMargin: '0px 0px -50px 0px', // Start animation slightly before element is fully in view
+        }
+      );
+
+      observer.observe(tickerElement);
+    });
+  });
+</script>
 
 {% schema %}
 {

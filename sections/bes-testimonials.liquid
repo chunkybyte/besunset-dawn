@@ -22,12 +22,12 @@
       <button class="bes-testimonials-arrow bes-testimonials-arrow--right" aria-label="Next testimonials">&#8594;</button>
     </div>
   {% endcomment %}
-  <div class="bes-testimonial-header-mobile">
+  <div class="bes-testimonial-header-mobile fade-in-element">
     <h2>{{ section.settings.title }}</h2>
     <p>{{ section.settings.subtitle }}</p>
   </div>
   <div class="bes-testimonials-list-wrapper">
-    <div class="bes-testimonials-list-item bes-testimonials-header">
+    <div class="bes-testimonials-list-item bes-testimonials-header fade-in-element">
       <div>
         <h2>{{ section.settings.title }}</h2>
         <p>{{ section.settings.subtitle }}</p>
@@ -43,9 +43,9 @@
     </div>
     <div class="bes-testimonials-list">
       {% for block in section.blocks %}
-        <div class="bes-testimonial">
+        <div class="bes-testimonial fade-in-element" style="animation-delay: {{ forloop.index | times: 0.2 }}s;">
           <div class="bes-testimonial-content">
-            <div class="bes-testimonial-quote">“{{ block.settings.quote }}”</div>
+            <div class="bes-testimonial-quote">"{{ block.settings.quote }}"</div>
             <div class="bes-testimonial-person">
               <div class="bes-testimonial-name">{{ block.settings.name }}</div>
             </div>
@@ -70,6 +70,27 @@
 </section>
 
 <style>
+  /* Fade-in animation classes */
+  .fade-in-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-in-element.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Staggered animation for testimonials */
+  .bes-testimonial.fade-in-element {
+    transition-delay: 0s;
+  }
+
+  .bes-testimonial.fade-in-element.animate {
+    transition-delay: inherit;
+  }
+
   .bes-testimonials-section {
     padding: 32px;
     position: relative;
@@ -264,6 +285,28 @@
     const rightArrow = section.querySelector('.bes-testimonials-arrow--right');
     const testimonials = Array.from(list.children);
     let currentIndex = 0;
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1, // Trigger when 10% of the element is visible
+      rootMargin: '0px 0px -50px 0px', // Trigger slightly before the element comes into view
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          // Once animated, we can stop observing
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    const fadeElements = section.querySelectorAll('.fade-in-element');
+    fadeElements.forEach((element) => {
+      observer.observe(element);
+    });
 
     function getCardWidth() {
       return testimonials[0] ? testimonials[0].offsetWidth : 0;

@@ -33,9 +33,6 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    align-self: center;
-    opacity: 0; /* Start hidden */
     transform: translateY(40px); /* Slide up effect */
     transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s; /* Delay for stagger */
   }
@@ -53,7 +50,7 @@
     background-position: {{ section.settings.desktop_image_position }};
     opacity: 0; /* Start hidden */
     transform: scale(1.1); /* Start slightly zoomed */
-    transition: opacity 1.2s ease 0.1s, transform 1.2s ease 0.1s; /* Slight delay */
+    transition: opacity 1.2s ease 0.1s, transform 1.2s ease 0.1s, background-size 1.2s ease 0.1s; /* Slight delay */
   }
 
   .lagoon-hero-banner--{{ section.id }}.loaded .lagoon-hero-banner__section-image {

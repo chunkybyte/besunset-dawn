@@ -85,3 +85,52 @@
 .lagoon-text-banner__button--secondary:hover {
   color: white;
 }
+
+/* Scroll-triggered animations */
+.lagoon-text-banner {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.lagoon-text-banner.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered animation for child elements */
+.lagoon-text-banner__subtitle,
+.lagoon-text-banner__heading2,
+.lagoon-text-banner__body,
+.lagoon-text-banner__ctas {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.lagoon-text-banner.animate-in .lagoon-text-banner__subtitle {
+  animation: fadeInUp 0.6s ease 0.1s forwards;
+}
+
+.lagoon-text-banner.animate-in .lagoon-text-banner__heading2 {
+  animation: fadeInUp 0.6s ease 0.2s forwards;
+}
+
+.lagoon-text-banner.animate-in .lagoon-text-banner__body {
+  animation: fadeInUp 0.6s ease 0.3s forwards;
+}
+
+.lagoon-text-banner.animate-in .lagoon-text-banner__ctas {
+  animation: fadeInUp 0.6s ease 0.4s forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

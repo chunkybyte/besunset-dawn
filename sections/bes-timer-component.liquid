@@ -77,6 +77,32 @@
   .bes-timer-cta {
     padding: 16px 64px;
   }
+
+  /* Animation Classes */
+  .bes-timer-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .bes-timer-animate.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Staggered animation delays for different elements */
+  .bes-timer-header.animate-in {
+    transition-delay: 0.1s;
+  }
+
+  .bes-timer-countdown.animate-in {
+    transition-delay: 0.3s;
+  }
+
+  .bes-timer-cta.animate-in {
+    transition-delay: 0.5s;
+  }
+
   @media (max-width: 1024px) {
     .bes-timer-component {
       padding: 32px 16px;
@@ -111,7 +137,7 @@
 
 <section class="bes-timer-component" style="background: {{ section.settings.bg_color | default: '#fff' }};">
   <div class="bes-timer-content">
-    <div class="bes-timer-header">
+    <div class="bes-timer-header bes-timer-animate">
       {% if section.settings.title != blank %}
         <h2 class="bes-timer-title">{{ section.settings.title }}</h2>
       {% endif %}
@@ -120,7 +146,7 @@
       {% endif %}
     </div>
     <div
-      class="bes-timer-countdown"
+      class="bes-timer-countdown bes-timer-animate"
       data-end-date="{{ section.settings.end_date | default: '2025-08-01' }}"
       data-end-time="{{ section.settings.end_time | default: '00:00:00' }}"
       data-timezone="{{ section.settings.timezone | default: 'UTC' }}"
@@ -141,7 +167,7 @@
     {% if section.settings.cta_text != blank %}
       <a
         href="{{ section.settings.cta_link | default: '#' }}"
-        class="bes-timer-cta lagoon-button lagoon-button--primary"
+        class="bes-timer-cta lagoon-button lagoon-button--primary bes-timer-animate"
       >
         {{ section.settings.cta_text }}
       </a>
@@ -151,6 +177,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    // Timer functionality
     const timer = document.querySelector('.bes-timer-countdown');
     if (!timer) return;
 
@@ -184,6 +211,33 @@
 
     updateTimer();
     setInterval(updateTimer, 1000);
+
+    // Scroll animation functionality
+    const observerOptions = {
+      threshold: 0.2, // Trigger when 20% of the element is visible
+      rootMargin: '0px 0px -50px 0px', // Trigger slightly before the element is fully in view
+    };
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          // Add animation class to all animated elements within this section
+          const animatedElements = entry.target.querySelectorAll('.bes-timer-animate');
+          animatedElements.forEach(function (element) {
+            element.classList.add('animate-in');
+          });
+
+          // Stop observing after animation is triggered
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Start observing the timer component
+    const timerComponent = document.querySelector('.bes-timer-component');
+    if (timerComponent) {
+      observer.observe(timerComponent);
+    }
   });
 </script>
 

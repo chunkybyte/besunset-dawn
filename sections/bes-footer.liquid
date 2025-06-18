@@ -5,6 +5,31 @@
     padding: 48px 32px;
     font-family: 'Quicksand', sans-serif;
   }
+
+  /* Enhanced scroll animation styles */
+  .bes-footer.scroll-trigger.animate--fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .bes-footer.scroll-trigger:not(.scroll-trigger--offscreen).animate--fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .bes-footer__col.scroll-trigger.animate--fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition-delay: calc(var(--animation-order, 0) * 0.2s);
+  }
+
+  .bes-footer__col.scroll-trigger:not(.scroll-trigger--offscreen).animate--fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   .bes-footer__container {
     display: flex;
     flex-wrap: wrap;
@@ -104,10 +129,10 @@
   }
 </style>
 
-<footer class="bes-footer">
+<footer class="bes-footer scroll-trigger animate--fade-in">
   <div class="bes-footer__container">
     <!-- About the Shop -->
-    <div class="bes-footer__col">
+    <div class="bes-footer__col scroll-trigger animate--fade-in" data-cascade>
       <div class="bes-footer__title">{{ section.settings.footer_title }}</div>
       <div class="bes-footer__copy">{{ section.settings.footer_copy }}</div>
       <div class="bes-footer__social">
@@ -142,7 +167,7 @@
       </div>
     </div>
     <!-- Shop Menu -->
-    <div class="bes-footer__menu-container bes-footer__col">
+    <div class="bes-footer__menu-container bes-footer__col scroll-trigger animate--fade-in" data-cascade>
       <div>
         <div class="bes-footer__title">{{ section.settings.menu_1_title }}</div>
         <ul class="bes-footer__menu">
@@ -166,7 +191,7 @@
       </div>
     </div>
     <!-- Newsletter -->
-    <div class="bes-footer__col bes-footer__newsletter">
+    <div class="bes-footer__col bes-footer__newsletter scroll-trigger animate--fade-in" data-cascade>
       <div class="bes-footer__title">{{ section.settings.newsletter_title }}</div>
       <div class="bes-footer__copy">{{ section.settings.newsletter_copy }}</div>
       <form

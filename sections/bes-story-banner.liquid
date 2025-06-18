@@ -96,26 +96,106 @@
       left: unset;
     }
   }
+
+  /* Enhanced Scroll-triggered animations for story banner */
+
+  /* Initial state for all animated elements */
+  .bes-story-banner-section .scroll-trigger {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Media elements slide in from different directions */
+  .bes-story-banner-media.scroll-trigger {
+    transform: translateX(50px);
+  }
+
+  .bes-story-banner-section.flipped .bes-story-banner-media.scroll-trigger {
+    transform: translateX(-50px);
+  }
+
+  /* Animated state when element comes into view */
+  .bes-story-banner-section .scroll-trigger:not(.scroll-trigger--offscreen) {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+
+  /* Staggered animation delays for cascade effect */
+  .bes-story-banner-section .scroll-trigger[data-cascade='1'] {
+    transition-delay: 0.1s;
+  }
+
+  .bes-story-banner-section .scroll-trigger[data-cascade='2'] {
+    transition-delay: 0.2s;
+  }
+
+  .bes-story-banner-section .scroll-trigger[data-cascade='3'] {
+    transition-delay: 0.3s;
+  }
+
+  .bes-story-banner-section .scroll-trigger[data-cascade='4'] {
+    transition-delay: 0.4s;
+  }
+
+  /* Special animation for CTA button */
+  .bes-story-banner-cta.scroll-trigger {
+    transform: translateY(20px) scale(0.95);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .bes-story-banner-cta.scroll-trigger:not(.scroll-trigger--offscreen) {
+    transform: translateY(0) scale(1);
+  }
+
+  /* Ensure animations work in design mode */
+  .bes-story-banner-section .scroll-trigger.scroll-trigger--design-mode {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 765px) {
+    .bes-story-banner-section .scroll-trigger {
+      transform: translateY(20px);
+    }
+
+    .bes-story-banner-media.scroll-trigger {
+      transform: translateY(20px);
+    }
+
+    .bes-story-banner-section.flipped .bes-story-banner-media.scroll-trigger {
+      transform: translateY(20px);
+    }
+  }
 </style>
 
 <section class="bes-story-banner-section{% if section.settings.media_position == 'left' %} flipped{% endif %}">
   <div class="bes-story-banner-text">
     {% if section.settings.subtitle != blank %}
-      <div class="bes-story-banner-subtitle">{{ section.settings.subtitle }}</div>
+      <div class="bes-story-banner-subtitle scroll-trigger" data-cascade="1">
+        {{ section.settings.subtitle }}
+      </div>
     {% endif %}
     {% if section.settings.title != blank %}
-      <div class="bes-story-banner-title">{{ section.settings.title }}</div>
+      <div class="bes-story-banner-title scroll-trigger" data-cascade="2">
+        {{ section.settings.title }}
+      </div>
     {% endif %}
     {% if section.settings.copy != blank %}
-      <div class="bes-story-banner-copy">{{ section.settings.copy }}</div>
+      <div class="bes-story-banner-copy scroll-trigger" data-cascade="3">{{ section.settings.copy }}</div>
     {% endif %}
     {% if section.settings.cta_link != blank and section.settings.cta_text != blank %}
-      <a class="bes-story-banner-cta lagoon-button lagoon-button--primary" href="{{ section.settings.cta_link }}">
+      <a
+        class="bes-story-banner-cta lagoon-button lagoon-button--primary scroll-trigger"
+        data-cascade="4"
+        href="{{ section.settings.cta_link }}"
+      >
         {{- section.settings.cta_text -}}
       </a>
     {% endif %}
   </div>
-  <div class="bes-story-banner-media">
+  <div class="bes-story-banner-media scroll-trigger" data-cascade="2">
     {% if section.settings.main_image != blank %}
       <img
         class="bes-story-banner-main-image"
